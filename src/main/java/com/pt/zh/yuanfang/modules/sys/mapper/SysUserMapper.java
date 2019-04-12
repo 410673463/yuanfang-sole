@@ -34,4 +34,9 @@ public interface SysUserMapper extends MyMapper<SysUser> {
 
     @Select(" select u.id, u.name, u.salt, u.email, u.mobile, u.status, u.dept_id, u.create_by, u.create_time, u.last_update_by, u.last_update_time, (select d.name from sys_dept d where d.id = u.dept_id) deptName from sys_user u where u.name like '%#{patternName}%'   and u.email like '%#{patternEmail}%'")
     List<SysUser> findPageByNameAndEmail(@Param(value = "name") String name, @Param(value = "email") String email);
+
+    @Select(
+          "select u.id, u.name,u.email, u.mobile, u.status, u.dept_id, u.create_by, u.create_time, u.last_update_by, u.last_update_time, (select d.name from sys_dept d where d.id = u.dept_id) deptName from sys_user u   where u.id = #{id}"
+    )
+    SysUser getByIdWithoutPass(@Param(value = "id") Integer id);
 }

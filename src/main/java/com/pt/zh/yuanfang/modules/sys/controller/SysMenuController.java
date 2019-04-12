@@ -2,9 +2,11 @@ package com.pt.zh.yuanfang.modules.sys.controller;
 
 import com.pt.zh.yuanfang.common.bean.ResponseCode;
 import com.pt.zh.yuanfang.common.bean.ResponseResult;
+import com.pt.zh.yuanfang.common.utils.SecurityUtils;
 import com.pt.zh.yuanfang.modules.core.annotations.AuthToken;
 import com.pt.zh.yuanfang.modules.core.annotations.PassToken;
 import com.pt.zh.yuanfang.modules.sys.entity.SysMenu;
+import com.pt.zh.yuanfang.modules.sys.entity.SysUser;
 import com.pt.zh.yuanfang.modules.sys.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -50,9 +52,9 @@ public class SysMenuController {
 	}
 
 	@GetMapping(value="/findNavTree")
-	@PassToken
-	public ResponseResult findNavTree(@RequestParam  String userName) {
-		return ResponseResult.e(ResponseCode.OK,(sysMenuService.findTree(userName, 1)));
+	public ResponseResult findNavTree() {
+		SysUser user = SecurityUtils.getUser();
+		return ResponseResult.e(ResponseCode.OK,(sysMenuService.findTree(user.getId(), 1)));
 	}
 	
 

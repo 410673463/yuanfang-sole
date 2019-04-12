@@ -65,9 +65,9 @@ public class SysMenuServiceImpl implements SysMenuService {
 	}
 
 	@Override
-	public List<SysMenu> findTree(String userName, int menuType) {
+	public List<SysMenu> findTree(Integer userId, int menuType) {
 		List<SysMenu> sysMenus = new ArrayList<>();
-		List<SysMenu> menus = findByUser(userName);
+		List<SysMenu> menus = findByUser(userId);
 		for (SysMenu menu : menus) {
 			if (menu.getParentId() == null || menu.getParentId() == 0) {
 				menu.setLevel(0);
@@ -82,11 +82,11 @@ public class SysMenuServiceImpl implements SysMenuService {
 	}
 
 	@Override
-	public List<SysMenu> findByUser(String userName) {
-		if(userName == null || "".equals(userName) || ConstantConfig.ADMIN.equalsIgnoreCase(userName)) {
+	public List<SysMenu> findByUser(Integer userId) {
+		if(userId == null || "".equals(userId)) {
 			return sysMenuMapper.findAll();
 		}
-		return sysMenuMapper.findByUserName(userName);
+		return sysMenuMapper.findByUserId(userId);
 	}
 
 	private void findChildren(List<SysMenu> SysMenus, List<SysMenu> menus, int menuType) {

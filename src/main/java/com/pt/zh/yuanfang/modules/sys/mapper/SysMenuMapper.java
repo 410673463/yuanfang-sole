@@ -26,6 +26,13 @@ public interface SysMenuMapper extends MyMapper<SysMenu> {
                     "  and ur.role_id = rm.role_id and rm.menu_id = m.id"
     )
     List<SysMenu> findByUserName(@Param(value = "userName") String userName);
+    @Select(
+            "select m.* from sys_menu m, sys_user u, sys_user_role ur, sys_role_menu rm" +
+                    "  where u.id = #{id} and u.id = ur.user_id " +
+                    "  and ur.role_id = rm.role_id and rm.menu_id = m.id"
+    )
+    List<SysMenu> findByUserId(@Param(value = "id") Integer id);
+
 
     @Select(
             " select m.* from sys_menu m, sys_role_menu rm" +

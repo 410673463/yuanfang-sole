@@ -1,21 +1,19 @@
 package com.pt.zh.yuanfang.modules.sys.controller;
 
 
-import com.github.pagehelper.PageInfo;
 import com.pt.zh.yuanfang.common.bean.ResponseCode;
 import com.pt.zh.yuanfang.common.bean.ResponseResult;
 import com.pt.zh.yuanfang.common.config.ConstantConfig;
 import com.pt.zh.yuanfang.common.page.PageRequest;
 import com.pt.zh.yuanfang.common.utils.PasswordUtils;
+import com.pt.zh.yuanfang.common.utils.SecurityUtils;
+import com.pt.zh.yuanfang.modules.core.annotations.PassToken;
 import com.pt.zh.yuanfang.modules.sys.entity.SysUser;
-import com.pt.zh.yuanfang.modules.sys.entity.SysUserRole;
 import com.pt.zh.yuanfang.modules.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -24,12 +22,8 @@ public class SysUserController {
     private SysUserService sysUserService;
     @GetMapping("/info")
     public ResponseResult getUserInfo(){
-        Map<String,String> map = new HashMap<>();
-        map.put("roles","admin");
-        map.put("introduction","我是超级管理员");
-        map.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        map.put("name","Super Admin");
-        return ResponseResult.e(ResponseCode.OK,map);
+        SysUser user = SecurityUtils.getUser();
+        return ResponseResult.e(ResponseCode.OK,user);
     }
 
 
@@ -84,8 +78,9 @@ public class SysUserController {
 
 
     @GetMapping(value="/findPermissions")
-    public ResponseResult findPermissions(@RequestParam String name) {
-        return ResponseResult.e(ResponseCode.OK,sysUserService.findPermissions(name));
+    public ResponseResult findPermissions() {
+        SysUser user = SecurityUtils.getUser();
+        return ResponseResult.e(ResponseCode.OK,sysUserService.findPermissions(user.getId()));
     }
 
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Table(name = "`sys_user`")
 @Data
-public class SysUser {
+public class SysUser implements Serializable {
     /**
      * 编号
      */

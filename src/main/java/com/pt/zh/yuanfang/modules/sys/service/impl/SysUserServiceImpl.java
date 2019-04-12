@@ -5,16 +5,15 @@ import com.pt.zh.yuanfang.common.page.MybatisPageHelper;
 import com.pt.zh.yuanfang.common.page.PageRequest;
 import com.pt.zh.yuanfang.common.page.PageResult;
 import com.pt.zh.yuanfang.modules.core.entity.SignIn;
-import com.pt.zh.yuanfang.modules.sys.entity.SysMenu;
-import com.pt.zh.yuanfang.modules.sys.entity.SysRole;
-import com.pt.zh.yuanfang.modules.sys.entity.SysUser;
-import com.pt.zh.yuanfang.modules.sys.entity.SysUserRole;
+import com.pt.zh.yuanfang.modules.sys.entity.*;
+import com.pt.zh.yuanfang.modules.sys.mapper.SysDeptMapper;
 import com.pt.zh.yuanfang.modules.sys.mapper.SysRoleMapper;
 import com.pt.zh.yuanfang.modules.sys.mapper.SysUserMapper;
 import com.pt.zh.yuanfang.modules.sys.mapper.SysUserRoleMapper;
 import com.pt.zh.yuanfang.modules.sys.service.SysMenuService;
 import com.pt.zh.yuanfang.modules.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +33,8 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserRoleMapper sysUserRoleMapper;
     @Autowired
     private SysRoleMapper sysRoleMapper;
+    @Autowired
+    private SysDeptMapper sysdeptMapper;
 
     @Transactional
     @Override
@@ -89,8 +90,16 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
+    @Cacheable(value = "SYS:USER:ID",key = "#id")
     public SysUser findById(Integer id) {
-        return sysUserMapper.selectByPrimaryKey(id);
+        SysUser user =  sysUserMapper.getByIdWithoutPass(id);
+        SysDept dept = sysdeptMapper.selectByPrimaryKey(user.getDeptId());
+        user.setDept(dept);
+        user.setDeptName(dept.getName());
+        List<SysUserRole> userRoles = findUserRoles(user.getId());
+        user.setUserRoles(userRoles);
+        user.setRoleNames(getRoleNames(userRoles));
+        return user;
     }
 
     @Override
@@ -162,9 +171,9 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public Set<String> findPermissions(String userName) {
+    public Set<String> findPermissions(Integer userId) {
         Set<String> perms = new HashSet<>();
-        List<SysMenu> sysMenus = sysMenuService.findByUser(userName);
+        List<SysMenu> sysMenus = sysMenuService.findByUser(userId);
         for(SysMenu sysMenu:sysMenus) {
             if(sysMenu.getPerms() != null && !"".equals(sysMenu.getPerms())) {
                 perms.add(sysMenu.getPerms());

@@ -54,7 +54,16 @@ public class SecurityUtils {
 		SysUser user = (SysUser) request.getAttribute("sysUser");
 		return user.getName();
 	}
-	
+	/**
+	 * 获取当前用户名
+	 * @return
+	 */
+	public static SysUser getUser() {
+		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = attributes.getRequest();
+		SysUser user = (SysUser) request.getAttribute("sysUser");
+		return user;
+	}
 	/**
 	 * 获取用户名
 	 * @return

@@ -20,10 +20,10 @@ public interface SysUserService extends CurdService<SysUser> {
 
 	/**
 	 * 查找用户的菜单权限标识集合
-	 * @param userName
+	 * @param userId
 	 * @return
 	 */
-	Set<String> findPermissions(String userName);
+	Set<String> findPermissions(Integer userId);
 
 	/**
 	 * 查找用户的角色集合

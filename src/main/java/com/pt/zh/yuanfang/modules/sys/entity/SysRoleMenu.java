@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Table(name = "`sys_role_menu`")
-public class SysRoleMenu {
+public class SysRoleMenu  implements Serializable {
     /**
      * 编号
      */

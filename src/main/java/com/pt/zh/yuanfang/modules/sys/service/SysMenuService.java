@@ -19,14 +19,19 @@ public interface SysMenuService extends CurdService<SysMenu> {
 	 * @param userId
 	 * @return
 	 */
-	List<SysMenu> findTree(String userName, int menuType);
+	List<SysMenu> findTree(Integer userId, int menuType);
 
 	/**
 	 * 根据用户名查找菜单列表
 	 * @param userName
 	 * @return
 	 */
-	List<SysMenu> findByUser(String userName);
-
+	//List<SysMenu> findByUser(String userName);
+	/**
+	 * 根据用户名查找菜单列表
+	 * @param userId
+	 * @return
+	 */
+	List<SysMenu> findByUser(Integer userId);
 
 }

@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 
 @Table(name = "`sys_dept`")
 @Data
-public class SysDept {
+public class SysDept  implements Serializable {
     /**
      * 编号
      */
