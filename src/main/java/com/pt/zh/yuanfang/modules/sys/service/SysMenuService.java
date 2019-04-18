@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 菜单管理
- * @author Louis
+ *
  * @date Oct 29, 2018
  */
 public interface SysMenuService extends CurdService<SysMenu> {

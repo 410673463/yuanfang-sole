@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 字典管理
- * @author Louis
+ *
  * @date Oct 29, 2018
  */
 public interface SysDictService extends CurdService<SysDict> {

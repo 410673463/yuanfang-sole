@@ -27,6 +27,8 @@ spring:
       maximum-pool-size: 20
       connection-test-query: SELECT 1
       connection-timeout: 3000
+  cross:
+      allow: http://localhost:9527,http://localhost:8081
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

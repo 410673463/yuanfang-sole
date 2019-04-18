@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * MyBatis 分页查询助手
- * @author Louis
+ *
  * @date Aug 19, 2018
  */
 public class MybatisPageHelper {

@@ -2,7 +2,7 @@ package com.pt.zh.yuanfang.common.page;
 
 /**
  * 分页查询列过滤器
- * @author Louis
+ *
  * @date Aug 19, 2018
  */
 public class ColumnFilter {

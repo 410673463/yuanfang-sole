@@ -7,7 +7,6 @@ import com.pt.zh.yuanfang.common.config.ConstantConfig;
 import com.pt.zh.yuanfang.common.page.PageRequest;
 import com.pt.zh.yuanfang.common.utils.PasswordUtils;
 import com.pt.zh.yuanfang.common.utils.SecurityUtils;
-import com.pt.zh.yuanfang.modules.core.annotations.PassToken;
 import com.pt.zh.yuanfang.modules.sys.entity.SysUser;
 import com.pt.zh.yuanfang.modules.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,14 +46,7 @@ public class SysUserController {
                 String password = PasswordUtils.encode(record.getPassword(), salt);
                 record.setSalt(salt);
                 record.setPassword(password);
-            } /*else {
-                // 修改用户, 且修改了密码
-                if(!record.getPassword().equals(user.getPassword())) {
-                    String password = PasswordUtils.encode(record.getPassword(), salt);
-                    record.setSalt(salt);
-                    record.setPassword(password);
-                }
-            }*/
+            }
         }
         return ResponseResult.e(ResponseCode.OK,sysUserService.save(record));
     }

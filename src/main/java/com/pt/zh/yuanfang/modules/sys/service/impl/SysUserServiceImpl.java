@@ -188,7 +188,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public SysUser singIn(SignIn signIn) {
+    public synchronized  SysUser singIn(SignIn signIn) {
         return sysUserMapper.singIn(signIn.getAccount(),signIn.getPassword());
     }
 }

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
 
@@ -54,17 +55,17 @@ public class AuthorizationTokenInterceptor implements HandlerInterceptor {
         //if (method.isAnnotationPresent(AuthToken.class) || method.getDeclaringClass().isAnnotationPresent(AuthToken.class)) {
         // 执行认证
         if (token == null) {
-            httpServletResponse.sendError(401, "未登录");
+            sendError(httpServletResponse);
         }
         //检查服务端 redis保存的 token --> id
         Integer userId = (Integer) redisTemplate.opsForValue().get(ConstantConfig.SY_TOKEN_LOGIN_ID + token);
         if (userId == null) {
-            httpServletResponse.sendError(401, "登录过期");
+            sendError(httpServletResponse);
         }
         //redis id获取user
         SysUser user = userService.findById(userId);
         if (null == user) {
-            httpServletResponse.sendError(401, "登录过期");
+            sendError(httpServletResponse);
         }
         //获取redis保存的时间戳
         Long timestamp = (Long) redisTemplate.opsForValue().get(ConstantConfig.SY_TOKEN__LOGIN_TIME + userId);
@@ -73,7 +74,7 @@ public class AuthorizationTokenInterceptor implements HandlerInterceptor {
         try {
             jwtVerifier.verify(token);
         } catch (JWTVerificationException e) {
-            httpServletResponse.sendError(401, "token认证失败");
+            sendError(httpServletResponse);
         }
         //token续费
         tokenService.updateToken(user, token, timestamp);
@@ -97,5 +98,13 @@ public class AuthorizationTokenInterceptor implements HandlerInterceptor {
                                 HttpServletResponse httpServletResponse,
                                 Object o, Exception e) throws Exception {
 
+    }
+    private static void sendError(HttpServletResponse response) throws IOException {
+//        response.addHeader("Access-Control-Allow-Origin","http://loaclhost:8081");
+//        response.addHeader("Access-Control-Methods","*");
+//        response.addHeader("Access-Control-Max-Age","1000");
+//        response.addHeader("Access-Control-Allow-Headers","Content-Type");
+//        response.addHeader("Access-Control-Allow-Credentials","true");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"请重新登录!");
     }
 }
