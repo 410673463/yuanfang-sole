@@ -41,3 +41,4 @@ logging:
     com.pt.zh.yuanfang.modules.*.*: debug
 server:
   port: 8081
+

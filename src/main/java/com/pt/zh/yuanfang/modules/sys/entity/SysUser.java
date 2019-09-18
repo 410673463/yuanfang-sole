@@ -1,6 +1,7 @@
 package com.pt.zh.yuanfang.modules.sys.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.pt.zh.yuanfang.common.entity.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Table(name = "`sys_user`")
 @Data
-public class SysUser implements Serializable {
+public class SysUser extends BaseEntity implements Serializable {
     /**
      * 编号
      */
@@ -63,37 +64,7 @@ public class SysUser implements Serializable {
     @Column(name = "`dept_id`")
     private Integer deptId;
 
-    /**
-     * 创建人
-     */
-    @Column(name = "`create_by`")
-    private String createBy;
 
-    /**
-     * 创建时间
-     */
-    @Column(name = "`create_time`")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
-
-    /**
-     * 更新人
-     */
-    @Column(name = "`last_update_by`")
-    private String lastUpdateBy;
-
-    /**
-     * 更新时间
-     */
-    @Column(name = "`last_update_time`")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date lastUpdateTime;
-
-    /**
-     * 是否删除  -1：已删除  0：正常
-     */
-    @Column(name = "`del_flag`")
-    private Byte delFlag;
     @Transient
     private String roleNames;
     @Transient
