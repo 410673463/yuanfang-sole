@@ -1,13 +1,11 @@
 package com.pt.zh.yuanfang.modules.sys.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pt.zh.yuanfang.common.entity.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 

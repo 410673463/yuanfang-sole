@@ -1,12 +1,10 @@
 package com.pt.zh.yuanfang.modules.sys.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pt.zh.yuanfang.common.entity.BaseEntity;
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @Table(name = "`sys_role_menu`")
