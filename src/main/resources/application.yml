@@ -31,6 +31,7 @@ spring:
       allow: http://localhost:9527,http://localhost:8081
 mybatis:
   configuration:
+    #驼峰命名
     map-underscore-to-camel-case: true
     #show sql 全局配置方式
     #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
